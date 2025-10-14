@@ -21,20 +21,37 @@ def count_plot_affichage(dataframe_name, column_name):
     import matplotlib.pyplot as plt
 
     plt.figure(figsize=(8, 4))
-    sns.countplot(x=column_name, data=dataframe_name, hue='Delivery_Time_min')
+    sns.countplot(x=column_name, data=dataframe_name)
     plt.title(f"{column_name}")
     plt.xticks(rotation=45)
     plt.show()
 
 
-
-# fct pour la visualisation avec hist_plot
-def hist_plot_affichage(dataframe_name, column_name):
+# fct pour la visualisation avec box_plot
+def box_plot_affichage(dataframe_name, column_name):
     import seaborn as sns
     import matplotlib.pyplot as plt
 
     plt.figure(figsize=(8, 4))
-    sns.histplot(x=column_name, data=dataframe_name, hue='Delivery_Time_min')
+    sns.boxplot(x=column_name, y="Delivery_Time_min", data=dataframe_name)
     plt.title(f"{column_name}")
-    plt.xticks(rotation=45)
+    # plt.xticks(rotation=45)
     plt.show()
+
+# fct pour séparer le dataset en train/test
+def split_data(X, y, test_size=0.2, random_state=42):
+    from sklearn.model_selection import train_test_split
+    return train_test_split(X, y, test_size=test_size, random_state=random_state)
+
+
+# fct pour encode toutes les colonnes catégorielles spécifiées en valeurs numeriques
+def encode_categorical(dataframe_name):
+    from sklearn.preprocessing import LabelEncoder
+
+    dataframe_encoded = dataframe_name.copy()
+    categorical_cols = dataframe_encoded.select_dtypes(include=['object']).columns
+
+    for col in categorical_cols:
+        le = LabelEncoder()
+        dataframe_encoded[col] = le.fit_transform(dataframe_encoded[col])
+    return dataframe_encoded
