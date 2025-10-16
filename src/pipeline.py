@@ -1,3 +1,4 @@
+
 #* fct permet d'imporeter le data
 def import_dataset(dataset_name):
     import pandas as pd
@@ -47,24 +48,32 @@ def split_data(X, y, test_size=0.2, random_state=42):
 #* fct pour encode toutes les colonnes catégorielles spécifiées en valeurs numeriques
 def encode_categorical(dataframe_name):
     import pandas as pd
-    from sklearn.preprocessing import LabelEncoder
 
     dataframe_encoded = dataframe_name.copy()
+    
+    cols_to_drop = [
+        'Vehicle_Type', 'Time_of_Day', 'Preparation_Time_min',
+        'Courier_Experience_yrs', 'Delivery_Time_min'
+    ]
+    dataframe_encoded = dataframe_encoded.drop(columns=cols_to_drop, errors='ignore')
+    
+    # One-hot encoding
     dataframe_encoded = pd.get_dummies(dataframe_encoded, drop_first=False)
     
-    # pour changer seulement les True et false en 0 et 1
-    for col in dataframe_encoded.select_dtypes(include=['bool']):
-        le = LabelEncoder() 
-        dataframe_encoded[col] = le.fit_transform(dataframe_encoded[col])
-        
+    # Conversion des booléens en 0/1
+    bool_cols = dataframe_encoded.select_dtypes(include=['bool']).columns
+    if len(bool_cols) > 0:
+        dataframe_encoded[bool_cols] = dataframe_encoded[bool_cols].astype(int)
+    
     return dataframe_encoded
 
 
+
 #* fct pour selectkbest pour choisir les K (nombre) de colonnes les plus pertinentes pour la prédiction
-def select_kbest_columns(dataframe_name):
+def select_kbest_columns(dataframe_name_encoded,dataframe_name):
     from sklearn.feature_selection import SelectKBest, f_regression
     
-    X = dataframe_name.drop('Delivery_Time_min', axis=1)
+    X = dataframe_name_encoded
     y = dataframe_name['Delivery_Time_min']
     select = SelectKBest(score_func=f_regression, k=5)
     new_X = select.fit_transform(X,y)
@@ -77,4 +86,17 @@ def select_kbest_columns(dataframe_name):
 #* fct pour séparer le dataset en train/test
 def split_data(X, y, test_size=0.2, random_state=42):
     from sklearn.model_selection import train_test_split
-    return train_test_split(X, y, test_size=test_size, random_state=random_state)
+    
+    X_train,X_test,y_train,y_test = train_test_split(X,y,test_size= test_size, random_state=random_state)
+    return X_train,X_test,y_train,y_test
+
+
+#* fct pour la normalisation 
+def normalisation(X_train,X_test):
+    import pandas as pd
+    from sklearn.preprocessing import MinMaxScaler  
+     
+    scaler = MinMaxScaler()
+    X_train_scaled = pd.DataFrame(scaler.fit_transform(X_train), columns=X_train.columns)
+    X_test_scaled = pd.DataFrame(scaler.transform(X_test), columns=X_test.columns)
+    return X_test_scaled,X_train_scaled
