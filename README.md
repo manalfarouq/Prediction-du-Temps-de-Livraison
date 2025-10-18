@@ -1,6 +1,6 @@
 # Prédiction du Temps de Livraison Client (Delivery Time Prediction)
 
-## 🎯 Objectif du Projet
+##  Objectif du Projet
 Ce projet vise à développer un **modèle de régression Machine Learning** capable de **prédire avec précision le temps total d’une livraison (`Delivery_Time_min`)** pour une entreprise de logistique.
 
 ### Objectifs spécifiques :
@@ -12,7 +12,7 @@ Ce projet vise à développer un **modèle de régression Machine Learning** cap
 
 ---
 
-## 🧭 Gestion du Projet
+##  Gestion du Projet
 Pour garantir une approche structurée et professionnelle du développement du modèle prédictif :
 -  **Gestion des tâches** (EDA, prétraitement, modélisation, tests) réalisée avec **Jira**.  
 -  **Versionnement du code** avec **Git et GitHub**, en utilisant des **branches dédiées** (EDA, tests unitaires, pipeline).  
@@ -20,7 +20,7 @@ Pour garantir une approche structurée et professionnelle du développement du m
 
 ---
 
-## 🏗️ Structure du Projet
+## Structure du Projet
 La structure suivante présente l’organisation des fichiers et répertoires du projet :  
 
 ```bash
@@ -35,7 +35,7 @@ Prediction-du-Churn-Client-desabonnement-/
 │── README.md            # Documentation du projet
 ```
 
-## 🧰 Technologies Utilisées
+##  Technologies Utilisées
 - **Python**
 - **Pandas**, **NumPy** → manipulation et préparation des données  
 - **Matplotlib**, **Seaborn** → visualisation et analyse exploratoire  
@@ -48,20 +48,20 @@ Prediction-du-Churn-Client-desabonnement-/
 
 ---
 
-## ⚙️ Installation et Exécution
+##  Installation et Exécution
 
-### 1️⃣ Cloner le dépôt
+### 1 -> Cloner le dépôt
 ```bash
 git clone https://github.com/manalfarouq/Prediction-du-Temps-de-Livraison.git
 cd Prediction-du-Temps-de-Livraison
 ```
 
-### 2️⃣ Installer les dépendances
+### 2 -> Installer les dépendances
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Exécuter le projet
+### 3 ->  Exécuter le projet
 
 ```bash
 jupyter notebook main.ipynb
@@ -81,14 +81,14 @@ Tests automatisés (validation des données et MAE) :
 pytest -v test_pipeline.py
 ```
 
-## 🧾 Résultats et Choix du Modèle Final
+##  Résultats et Choix du Modèle Final
 
 | Modèle                     | MAE (min) | R²    |
 |-----------------------------|-----------|-------|
 | **SVR (Support Vector Regressor)** | **5.835** | **0.821** |
 | RandomForestRegressor       | 6.980     | 0.768 |
 
-### 🎯 Conclusion
+###  Conclusion
 Le **SVR** a été sélectionné comme modèle final car :
 
 - **MAE plus faible** (≈ 5.8 min → erreur moyenne ≈ 5 min 50 s)  
